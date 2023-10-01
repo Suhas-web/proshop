@@ -4,6 +4,7 @@ import productRoutes from "./routes/productRoutes.js";
 dotenv.config();
 import connection from "./config/db.js";
 connection();
+import { notFound, customErrorHandler } from "./middleware/errorMiddleware.js";
 
 let app = express();
 const PORT = process.env.PORT || 5000;
@@ -12,5 +13,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/products", productRoutes);
+app.use(notFound);
+app.use(customErrorHandler);
 
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));
