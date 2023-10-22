@@ -1,11 +1,46 @@
 import errorHandler from "../middleware/errorHandler.js";
 import User from "../models/userModel.js";
+import jwt from "jsonwebtoken";
 
 // desc: Auth
 // endpoint: POST /api/users/login
 // Access: public
 const authUser = errorHandler(async (req, res) => {
-  res.send("User auth");
+  const { email, password } = req.body;
+  const user = await User.findOne({ email: email });
+  if (user && (await user.matchPassword(password))) {
+    //Generate JWT token
+    const token = jwt.sign(
+      { userId: user._id }, //payload
+      process.env.jwtSecret, //secret
+      {
+        expiresIn: "30d", //options: expires in 30day
+      }
+    );
+
+    // Set JWT as HTTP-Only Cookie
+    res.cookie(
+      "jwt", // name
+      token, // value
+      {
+        // options
+        httpOnly: true, //prevent access from javascript DOM
+        secure: process.env.NODE_ENV === "PROD", //only send with https sites
+        sameSite: "strict", // client sends cookie for only same server site which had sent cookie in first place
+        maxAge: 30 * 24 * 60 * 60, // expires in 30day
+      }
+    );
+
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    });
+  } else {
+    res.status(401);
+    throw new Error("Invalid email or email not found");
+  }
 });
 
 // desc: Create user
