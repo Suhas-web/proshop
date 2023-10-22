@@ -9,6 +9,9 @@ const getProducts = errorHandler(async (req, res) => {
   res.status(200).json(await Product.find({}));
 });
 
+// desc: GET product by id
+// endpoint: /api/products/:id
+// Access: public
 const getProductById = errorHandler(async (req, res) => {
   const product =
     mongoose.Types.ObjectId.isValid(req.params.id) &&
