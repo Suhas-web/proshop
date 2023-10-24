@@ -19,7 +19,7 @@ import {
 const router = express.Router();
 
 router
-  .route("/")
+  .route("/register")
   .post(registerUser)
   .get(userAuthentication, adminAuthentication, getUsers);
 router.post("/logout", logoutUser);
