@@ -7,6 +7,7 @@ import connection from "./config/db.js";
 connection();
 import { notFound, customErrorHandler } from "./middleware/errorMiddleware.js";
 import cookieParser from "cookie-parser";
+import orderRoutes from "./routes/orderRoutes.js";
 
 let app = express();
 //body parser midlleware
@@ -23,6 +24,12 @@ app.get("/", (req, res) => {
 
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/orders", orderRoutes);
+
+app.use("/api/config/paypal", (req, res) =>
+  res.send({ clientId: process.env.PAYPAL_CLIENT_ID })
+);
+
 app.use(notFound);
 app.use(customErrorHandler);
 
