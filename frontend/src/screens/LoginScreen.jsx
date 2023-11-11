@@ -36,7 +36,11 @@ const LoginScreen = () => {
             dispatch(setCredentials({...res}))
         } catch (err) {
             console.log(err?.data);
-            toast.error(err?.data?.message || err.error)
+            if(err?.data?.stack?.includes("Invalid email")){
+                toast.error("Invalid email or password. Please try again")
+            } else {
+                toast.error(err?.data?.message || err.error)
+            }
         }  
     }
 

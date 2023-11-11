@@ -62,7 +62,6 @@ const logoutUser = errorHandler(async (req, res) => {
 // endpoint: GET /api/users/profile
 // Access: private
 const getUserProfile = errorHandler(async (req, res) => {
-  console.log(req.userId);
   const user = await User.findById(req.user._id);
   if (user) {
     res.status(200).json({
@@ -85,7 +84,6 @@ const updateUserProfile = errorHandler(async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
-    console.log(req.body);
     if (req.body.password) {
       user.password = req.body.password;
     }

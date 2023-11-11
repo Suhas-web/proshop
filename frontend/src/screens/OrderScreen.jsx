@@ -1,22 +1,20 @@
 import {Link, useParams} from 'react-router-dom';
-import {Row, Col, Form, ListGroup, Card, Button,Image} from 'react-bootstrap';
+import {Row, Col, ListGroup, Card, Button,Image} from 'react-bootstrap';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { useGetOrderDetailsQuery, useGetPayPalClientIdQuery, usePayOrderMutation } from '../slices/ordersApiSlice';
 import {PayPalButtons, usePayPalScriptReducer} from '@paypal/react-paypal-js'
 import {toast} from 'react-toastify'
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 
 import React from 'react'
 
 const OrderScreen = () => {
     const {id: orderId} = useParams();
     const {data: order, refetch, isLoading, error} = useGetOrderDetailsQuery(orderId);
-    const [payOrderResponse, {isLoading: isPayOrderLoading}] = usePayOrderMutation(); 
+    const [payOrderResponse] = usePayOrderMutation(); 
     const {data: paypal, isLoading: loadingPayPal, error: errorPayPal} = useGetPayPalClientIdQuery();
-    const [state, dispatch] = usePayPalScriptReducer();
-    const {userInfo} = useSelector(state => state.auth);
+    const [dispatch] = usePayPalScriptReducer();
 
     async function onApproveTest() {
           await payOrderResponse({orderId, details : {payer: {}}})
@@ -92,14 +90,14 @@ const OrderScreen = () => {
                 {order.shippingAddress.postalCode},
                 {order.shippingAddress.country}</p>
                 {order.isDelivered ? 
-                (<Message variant="success">Delivered on {order.deliveredAt}</Message>) : 
+                (<Message variant="success">Delivered on {String(order.deliveredAt).substring(0,10)}</Message>) : 
                 (<Message variant="danger">Not delivered</Message>)}
               </ListGroup.Item>
               <ListGroup.Item>
                 <h2>Payment</h2>
                 <p><strong>Method: </strong>{order.paymentMethod}</p>
                 {order.isPaid ? 
-                (<Message variant="success">Delivered on {order.paidAt}</Message>) : 
+                (<Message variant="success">Paid on {String(order.paidAt).substring(0,10)}</Message>) : 
                 (<Message variant="danger">Not Paid</Message>)}
               </ListGroup.Item>
               <ListGroup variant='flush'>

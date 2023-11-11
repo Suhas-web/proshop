@@ -4,8 +4,8 @@ const notFound = (req, res, next) => {
 };
 
 const customErrorHandler = (err, req, res, next) => {
-  const statusCode = res.statusCode == 200 ? 500 : res.statusCode;
-  const message = "Server error";
+  let statusCode = res.statusCode == 200 ? 500 : res.statusCode;
+  let message = "Server error";
 
   if (err.name === "CastError" && err.kind === "ObjectId") {
     message = "Resource not found";

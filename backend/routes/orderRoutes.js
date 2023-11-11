@@ -19,7 +19,7 @@ router
   .post(userAuthentication, addOrders)
   .get(userAuthentication, adminAuthentication, getAllOrders);
 
-router.route("/mine").post(userAuthentication, getMyOrders);
+router.route("/mine").get(userAuthentication, getMyOrders);
 router.route("/:id").get(userAuthentication, getOrderById);
 
 router.route("/:id/pay").put(userAuthentication, updateOrderToPaid);
