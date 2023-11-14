@@ -9,7 +9,6 @@ import Loader from "../components/Loader"
 import Message from "../components/Message"
 import {FaTimes} from 'react-icons/fa'
 import {LinkContainer} from 'react-router-bootstrap'
-import { ORDERS_URL } from "../constants"
 
 const UserProfileScreen = () => {
     

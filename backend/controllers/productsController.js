@@ -22,4 +22,23 @@ const getProductById = errorHandler(async (req, res) => {
   res.status(404).json({ code: 404, message: "Product Not Found" });
 });
 
-export { getProducts, getProductById };
+// desc: Create product
+// endpoint: /api/products
+// Access: Private/Admin
+const createProduct = errorHandler(async (req, res) => {
+  const product = new Product({
+    name: "Sample name",
+    price: 0,
+    user: req.user._id,
+    image: "/image/sample.jpg",
+    brand: "Sample brand",
+    category: "Sample category",
+    countInStock: 0,
+    numReviews: 0,
+    description: "Sample desc",
+  });
+  const createdProduct = product.save();
+  res.status(201).json(createdProduct);
+});
+
+export { getProducts, getProductById, createProduct };
