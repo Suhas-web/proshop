@@ -1,6 +1,6 @@
 import {Row, Col, Button, Table} from 'react-bootstrap';
 import Product from "../../components/Product";
-import { useCreateProductMutation, useGetProductsQuery } from '../../slices/productsApiSlice'
+import { useCreateProductMutation, useGetProductsQuery, useUpdateProductMutation} from '../../slices/productsApiSlice'
 import Loader from '../../components/Loader' 
 import Message from '../../components/Message' 
 import { FaEdit, FaTrash } from 'react-icons/fa';

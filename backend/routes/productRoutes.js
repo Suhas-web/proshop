@@ -3,6 +3,7 @@ import {
   getProductById,
   getProducts,
   createProduct,
+  updateProduct,
 } from "../controllers/productsController.js";
 import {
   userAuthentication,
@@ -12,6 +13,9 @@ const router = express.Router();
 
 router.route("/").get(getProducts);
 router.route("/").post(userAuthentication, adminAuthentication, createProduct);
-router.route("/:id").get(getProductById);
+router
+  .route("/:id")
+  .get(getProductById)
+  .put(userAuthentication, adminAuthentication, updateProduct);
 
 export default router;
