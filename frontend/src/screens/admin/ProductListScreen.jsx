@@ -6,12 +6,21 @@ import Message from '../../components/Message'
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { LinkContainer } from 'react-router-bootstrap'
 import {toast} from 'react-toastify'
+import { useDeleteProductMutation } from '../../slices/productsApiSlice';
 
 const ProductListScreen = () => {
 
     const {data: products, error, isLoading, refetch} = useGetProductsQuery();
-    const deleteProductHandler = (id) => {
-
+    const [deleteProduct, {isLoading: loadingDelete}] = useDeleteProductMutation();
+    const deleteProductHandler = async (id) => {
+      try {
+        const res = await deleteProduct(id);
+        toast.success("Deleted product successfully")
+        refetch();
+      } catch (err) {
+          console.log(err);
+          toast.error(err?.data?.message || err?.error);
+      }
     }
     const [createProduct, {isLoading: loadingCreate}] = useCreateProductMutation();
     const createProductHandler = async () => {

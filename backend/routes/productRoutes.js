@@ -4,6 +4,7 @@ import {
   getProducts,
   createProduct,
   updateProduct,
+  deleteProduct,
 } from "../controllers/productsController.js";
 import {
   userAuthentication,
@@ -11,11 +12,15 @@ import {
 } from "../middleware/authenticationMiddleware.js";
 const router = express.Router();
 
-router.route("/").get(getProducts);
-router.route("/").post(userAuthentication, adminAuthentication, createProduct);
+router
+  .route("/")
+  .get(getProducts)
+  .post(userAuthentication, adminAuthentication, createProduct);
+
 router
   .route("/:id")
   .get(getProductById)
-  .put(userAuthentication, adminAuthentication, updateProduct);
+  .put(userAuthentication, adminAuthentication, updateProduct)
+  .delete(userAuthentication, adminAuthentication, deleteProduct);
 
 export default router;
