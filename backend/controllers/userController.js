@@ -80,25 +80,31 @@ const getUserProfile = errorHandler(async (req, res) => {
 // endpoint: PUT /api/users/profile
 // Access: private
 const updateUserProfile = errorHandler(async (req, res) => {
-  const user = await User.findById(req.user._id);
+  console.log(req.params.id);
+  const user = await User.findById(req.params.id);
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
+    user.isAdmin = req.body.isAdmin;
     if (req.body.password) {
       user.password = req.body.password;
     }
-    const updatedUser = await user.save();
-    if (updatedUser) {
+    try {
+      const updatedUser = await user.save();
       res.status(200).json({
         _id: updatedUser._id,
         name: updatedUser.name,
         email: updatedUser.email,
         isAdmin: updatedUser.isAdmin,
       });
-    } else {
-      res.status(404);
-      throw new Error("Not found user data");
+    } catch (error) {
+      console.log(error);
+      res.status(500);
+      throw new Error("Error updating user");
     }
+  } else {
+    res.status(404);
+    throw new Error("Not found user data");
   }
 });
 
@@ -106,28 +112,69 @@ const updateUserProfile = errorHandler(async (req, res) => {
 // endpoint: GET /api/users
 // Access: private/admin
 const getUsers = errorHandler(async (req, res) => {
-  res.send("GET Users");
+  res.status(200).json(await User.find({}));
 });
 
 // desc: GET user by id
 // endpoint: GET /api/users/:id
 // Access: private/admin
 const getUserById = errorHandler(async (req, res) => {
-  res.send("GET User By ID");
+  const user = await User.findById({ _id: req.params.id });
+  if (user) {
+    res.status(200).json(user);
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
 });
 
 // desc: PUT users
 // endpoint: PUT /api/users/:id
 // Access: private/admin
 const updateUser = errorHandler(async (req, res) => {
-  res.send("Update User");
+  const user = User.findById({ _id: req.params.id });
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    user.isAdmin = Boolean(req.body.isAdmin);
+    try {
+      const updatedUser = await user.save();
+      res.status(200).json({
+        _id: updateUser._id,
+        name: updateUser.name,
+        email: updateUser.email,
+        isAdmin: updateUser.isAdmin,
+      });
+    } catch (err) {
+      res.status(500);
+      console.log(err);
+      throw new Error("Error updating user");
+    }
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
 });
 
 // desc: DELETE users
 // endpoint: DELETE /api/users/:id
 // Access: private/admin
 const deleteUserProfile = errorHandler(async (req, res) => {
-  res.send("DELETE User");
+  console.log("DELETE USER");
+  const user = await User.findById(req.params.id);
+  if (user) {
+    try {
+      await User.deleteOne({ _id: user._id });
+      res.status(200).send("Deleted successfully");
+    } catch (err) {
+      res.status(500);
+      console.log(err);
+      throw new Error("Error deleting user");
+    }
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
 });
 
 export {

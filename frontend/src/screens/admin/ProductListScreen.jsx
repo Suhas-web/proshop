@@ -1,6 +1,5 @@
 import {Row, Col, Button, Table} from 'react-bootstrap';
-import Product from "../../components/Product";
-import { useCreateProductMutation, useGetProductsQuery, useUpdateProductMutation} from '../../slices/productsApiSlice'
+import { useCreateProductMutation, useGetProductsQuery} from '../../slices/productsApiSlice'
 import Loader from '../../components/Loader' 
 import Message from '../../components/Message' 
 import { FaEdit, FaTrash } from 'react-icons/fa';
@@ -14,7 +13,7 @@ const ProductListScreen = () => {
     const [deleteProduct, {isLoading: loadingDelete}] = useDeleteProductMutation();
     const deleteProductHandler = async (id) => {
       try {
-        const res = await deleteProduct(id);
+        await deleteProduct(id);
         toast.success("Deleted product successfully")
         refetch();
       } catch (err) {
@@ -40,6 +39,7 @@ const ProductListScreen = () => {
       <Col><h1>Products</h1></Col>
       <Col className='text-end'><Button onClick={()=>createProductHandler()} className='btn-sm m-3'><FaEdit/> Create Product</Button></Col>
     </Row>
+    {loadingDelete && <Loader/>}
     {loadingCreate && <Loader/>}
     {isLoading ? <Loader/> : 
     error ? <Message variant="danger">{error?.data?.message || error.error}</Message> : 

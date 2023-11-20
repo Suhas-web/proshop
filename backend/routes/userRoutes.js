@@ -33,5 +33,9 @@ router
   .delete(userAuthentication, adminAuthentication, deleteUserProfile)
   .get(userAuthentication, adminAuthentication, getUserById)
   .put(userAuthentication, adminAuthentication, updateUserProfile);
+router
+  .route("/")
+  .get(userAuthentication, adminAuthentication, getUsers)
+  .delete(userAuthentication, adminAuthentication, deleteUserProfile);
 
 export default router;

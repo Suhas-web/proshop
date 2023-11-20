@@ -5,6 +5,7 @@ import {
   createProduct,
   updateProduct,
   deleteProduct,
+  createReview,
 } from "../controllers/productsController.js";
 import {
   userAuthentication,
@@ -22,5 +23,7 @@ router
   .get(getProductById)
   .put(userAuthentication, adminAuthentication, updateProduct)
   .delete(userAuthentication, adminAuthentication, deleteProduct);
+
+router.route("/:id/reviews").post(userAuthentication, createReview);
 
 export default router;
