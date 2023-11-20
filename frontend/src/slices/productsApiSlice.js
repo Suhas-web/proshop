@@ -8,6 +8,7 @@ const productsSliceApi = apiSlice.injectEndpoints({
         url: PRODUCTS_URL,
       }),
       keepUnusedDataFor: 5,
+      providesTags: ["Product"], // retrive data for tag
     }),
     getProductsDetail: builder.query({
       query: (productId) => ({
@@ -29,7 +30,7 @@ const productsSliceApi = apiSlice.injectEndpoints({
         method: "PUT",
         body: data,
       }),
-      invalidatesTags: ["Product"],
+      invalidatesTags: ["Product"], // clears cache of tag: product
     }),
   }),
 });
