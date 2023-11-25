@@ -152,7 +152,7 @@ const OrderScreen = () => {
                   {!order.isPaid && (<ListGroup.Item>
                     {loadingPayPal && <Loader/>}
                     <div>
-                      <Button className="my-3" onClick={onApproveTest}>Test Pay Order</Button>
+                      {userInfo.isAdmin && <Button className="my-3" onClick={onApproveTest}>Mark Order as Paid</Button>}
                       <div>
                         <PayPalButtons createOrder={createOrder} onApprove={onApprove} onError={onError}></PayPalButtons>
                       </div>

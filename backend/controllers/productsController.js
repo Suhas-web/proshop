@@ -6,7 +6,20 @@ import mongoose from "mongoose";
 // endpoint: /api/products
 // Access: public
 const getProducts = errorHandler(async (req, res) => {
-  res.status(200).json(await Product.find({}));
+  const pageSize = 1;
+  const page = Number(req.query.pageNumber) || 1;
+  //search
+  const keyword = req.query.keyword
+    ? { name: { $regex: req.query.keyword, $options: "i" } }
+    : {};
+  const totalProducts = await Product.countDocuments({ ...keyword });
+
+  const products = await Product.find({ ...keyword })
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
+  res
+    .status(200)
+    .json({ products, page, pages: Math.ceil(totalProducts / pageSize) });
 });
 
 // desc: GET product by id
