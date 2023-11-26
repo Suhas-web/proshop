@@ -5,11 +5,14 @@ import Loader from '../../components/Loader'
 import {FaTimes} from 'react-icons/fa'
 import {LinkContainer} from 'react-router-bootstrap'
 import {Table, Button} from 'react-bootstrap'
+import Meta from '../../components/Meta'
 
 const OrderListScreen = () => {
   const { data:orders, error, isLoading} = useGetAllOrdersQuery();
   return (
-    <><h2>Order History</h2>
+    <>
+    <Meta title="Admin"/>
+    <h2>Order History</h2>
             {isLoading ? (<Loader/>) : (error ? (<Message variant='danger'>{error?.data?.message || error?.error}</Message>) : (
                 <Table striped hover responsive className="table-sm">
                     <thead>

@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 // endpoint: /api/products
 // Access: public
 const getProducts = errorHandler(async (req, res) => {
-  const pageSize = 8;
+  const pageSize = Number(process.env.PAGINATION_LIMIT);
   const page = Number(req.query.pageNumber) || 1;
   //search
   const keyword = req.query.keyword

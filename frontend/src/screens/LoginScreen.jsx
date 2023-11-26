@@ -8,6 +8,7 @@ import { useLoginMutation } from '../slices/usersApiSlice'
 import { setCredentials } from '../slices/authSlice';
 import {toast} from 'react-toastify';
 import Loader from '../components/Loader'
+import Meta from '../components/Meta';
 
 const LoginScreen = () => {
 
@@ -45,6 +46,9 @@ const LoginScreen = () => {
     }
 
   return (
+    <>
+    <Meta title="Login"/>
+    
     <FormContainer>
         <Col md={8} xs={12}>
             <h1>Login</h1>
@@ -75,6 +79,7 @@ const LoginScreen = () => {
             </Row>
         </Col>
     </FormContainer>
+    </>
   )
 }
 

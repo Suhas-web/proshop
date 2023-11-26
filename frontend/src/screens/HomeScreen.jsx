@@ -6,6 +6,7 @@ import Message from '../components/Message';
 import { Link, useParams } from 'react-router-dom';
 import Paginate from '../components/Paginate';
 import CarouselPage from '../components/CarouselPage';
+import Meta from '../components/Meta';
 
 const HomeScreen = () => {
     const {pageNumber, keyword} = useParams();
@@ -20,6 +21,7 @@ const HomeScreen = () => {
     {isLoading ? <Loader/> : 
     error ? <Message variant="danger">{error?.data?.message || error.error}</Message> : 
         <>
+            <Meta/>
             <h1>{title}</h1>
             <Row>
                 {data && data.products && data.products.length > 0 ? 

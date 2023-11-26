@@ -7,8 +7,6 @@ import { LinkContainer } from 'react-router-bootstrap'
 import {toast} from 'react-toastify'
 import { useDeleteProductMutation } from '../../slices/productsApiSlice';
 import { useParams } from 'react-router-dom';
-import Paginate from '../../components/Paginate';
-
 const ProductListScreen = () => {
 
     const {pageNumber} = useParams();
@@ -79,7 +77,6 @@ const ProductListScreen = () => {
         </tbody>
       </Table>
     </>}
-        <Paginate pages={data.pages} page={data.page} isAdmin={true}/>
     </>
     );
 };
