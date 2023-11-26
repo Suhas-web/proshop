@@ -14,6 +14,13 @@ const productsSliceApi = apiSlice.injectEndpoints({
       keepUnusedDataFor: 5,
       providesTags: ["Product"], // retrive data for tag
     }),
+    getCarouselProducts: builder.query({
+      query: () => ({
+        url: `${PRODUCTS_URL}/carousel`,
+      }),
+      keepUnusedDataFor: 5,
+      providesTags: ["Product"],
+    }),
     getProductsDetail: builder.query({
       query: (productId) => ({
         url: `${PRODUCTS_URL}/${productId}`,
@@ -63,6 +70,7 @@ const productsSliceApi = apiSlice.injectEndpoints({
 export const {
   useGetProductsQuery,
   useGetProductsDetailQuery,
+  useGetCarouselProductsQuery,
   useCreateProductMutation,
   useUpdateProductMutation,
   useUploadProductImageMutation,

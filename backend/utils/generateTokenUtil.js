@@ -6,7 +6,7 @@ const generateToken = (res, userId) => {
     { userId }, //payload
     process.env.jwtSecret, //secret
     {
-      expiresIn: "30d", //options: expires in 30day
+      expiresIn: "7d", //options: expires in 7days
     }
   );
 
@@ -19,7 +19,7 @@ const generateToken = (res, userId) => {
       httpOnly: true, //prevent access from javascript DOM
       secure: process.env.NODE_ENV === "PROD", //only send with https sites
       sameSite: "strict", // client sends cookie for only same server site which had sent cookie in first place
-      maxAge: 30 * 24 * 60 * 60, // expires in 30day
+      maxAge: Number(7 * 24 * 60 * 60 * 1000), // expires in 7day
     }
   );
 };

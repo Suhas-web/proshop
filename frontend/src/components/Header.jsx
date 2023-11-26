@@ -8,6 +8,7 @@ import { useLogoutMutation } from '../slices/usersApiSlice'
 import { logout } from '../slices/authSlice'
 import { toast } from 'react-toastify'
 import { clearCartItems } from '../slices/cartSlice'
+import SearchBox from './SearchBox'
 
 const Header = () => {
     const {cartItems} = useSelector(state => state.cart);
@@ -38,6 +39,7 @@ const Header = () => {
                 <Navbar.Toggle aria-controls='basic-nabar-nav'/>
                 <Navbar.Collapse id='basic-nabar-nav'>
                     <Nav className='ms-auto'>
+                        <SearchBox/>
                         <LinkContainer to='/cart'>
                             <Nav.Link><FaShoppingCart/> Cart 
                             {(cartItems !== undefined || cartItems.length !== 0) && (

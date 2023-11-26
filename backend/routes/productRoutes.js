@@ -6,6 +6,7 @@ import {
   updateProduct,
   deleteProduct,
   createReview,
+  getProductsCarousel,
 } from "../controllers/productsController.js";
 import {
   userAuthentication,
@@ -17,6 +18,8 @@ router
   .route("/")
   .get(getProducts)
   .post(userAuthentication, adminAuthentication, createProduct);
+
+router.route("/carousel").get(getProductsCarousel);
 
 router
   .route("/:id")

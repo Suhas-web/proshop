@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 // endpoint: /api/products
 // Access: public
 const getProducts = errorHandler(async (req, res) => {
-  const pageSize = 1;
+  const pageSize = 8;
   const page = Number(req.query.pageNumber) || 1;
   //search
   const keyword = req.query.keyword
@@ -20,6 +20,16 @@ const getProducts = errorHandler(async (req, res) => {
   res
     .status(200)
     .json({ products, page, pages: Math.ceil(totalProducts / pageSize) });
+});
+
+// desc: GET products carousel
+// endpoint: /api/products/carousel
+// Access: public
+const getProductsCarousel = errorHandler(async (req, res) => {
+  const totalProducts = await Product.countDocuments({});
+
+  const products = await Product.find({}).sort({ rating: -1 }).limit(3);
+  res.status(200).json({ products });
 });
 
 // desc: GET product by id
@@ -129,6 +139,7 @@ const createReview = errorHandler(async (req, res) => {
 export {
   getProducts,
   getProductById,
+  getProductsCarousel,
   createProduct,
   updateProduct,
   deleteProduct,
