@@ -32,7 +32,7 @@ router
   .route("/:id")
   .delete(userAuthentication, adminAuthentication, deleteUserProfile)
   .get(userAuthentication, adminAuthentication, getUserById)
-  .put(userAuthentication, adminAuthentication, updateUserProfile);
+  .put(userAuthentication, adminAuthentication, updateUser);
 router
   .route("/")
   .get(userAuthentication, adminAuthentication, getUsers)

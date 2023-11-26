@@ -1,0 +1,3 @@
+Update profile password not working for user
+Update profile password for admin changes isAdmin:false
+doubleLoading on Carousal => remove load on Carousal

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useGetProductsDetailQuery, useUpdateProductMutation } from '../../slices/productsApiSlice';
-import { LinkContainer } from 'react-router-bootstrap';
-import {Row, Col, Button, Form} from 'react-bootstrap'
+import {Button, Form} from 'react-bootstrap'
 import FormContainer from '../../components/FormContainer';
 import Loader from '../../components/Loader'
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -20,7 +19,7 @@ const ProductEditScreen = () => {
     const [description, setDescription] = useState('');
     const {data: product, error, isLoading} = useGetProductsDetailQuery(productId);
     const [updateProduct, {isLoading: loadingUpdateProduct}] = useUpdateProductMutation();
-    const [uploadProductImage, {isLoading: loadingUpload}] = useUploadProductImageMutation();
+    const [uploadProductImage] = useUploadProductImageMutation();
     const navigate = useNavigate();
 
     const submitHandler = async (e) => {
@@ -40,7 +39,7 @@ const ProductEditScreen = () => {
             console.log(result.error);
             toast.error(result.error)
         } else {
-            toast.success("Updated profile succcessfully")
+            toast.success("Updated product succcessfully")
             navigate('/admin/productList');
         }
     }
@@ -51,7 +50,6 @@ const ProductEditScreen = () => {
         try {
             const res = await uploadProductImage(formData).unwrap();
             toast.success(res.message);
-            console.log("Response image URL: " + res.image);
             setImage(res.image);
         } catch (err) {
             console.log(err);

@@ -44,7 +44,6 @@ const addOrders = errorHandler(async (req, res) => {
 //@route   GET /api/orders/mine
 //@access Private
 const getMyOrders = errorHandler(async (req, res) => {
-  console.log(req.user._id);
   const orders = await Order.find({ user: req.user._id });
   res.status(200).json(orders);
 });

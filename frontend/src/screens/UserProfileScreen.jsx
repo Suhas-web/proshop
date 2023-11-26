@@ -17,7 +17,7 @@ const UserProfileScreen = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
-    const [updateProfile, {isLoading: loadingUpdateProfile}] = useUpdateProfileMutation();
+    const [updateProfile] = useUpdateProfileMutation();
     const {data: orderHistory, isLoading, error} = useGetMyOrdersQuery();
     const dispatch = useDispatch();
 
@@ -29,7 +29,7 @@ const UserProfileScreen = () => {
             try {
                 const res = await updateProfile({_id: userInfo._id, name, email, password}).unwrap();
                 dispatch(setCredentials(res));
-                toast.success("Profile updated successfully")
+                toast.success("Profile updated successfully.")
             } catch (err) {
                 console.log(err);
                 toast.error(err?.data?.message || err?.error);

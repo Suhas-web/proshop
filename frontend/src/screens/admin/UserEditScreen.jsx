@@ -18,7 +18,6 @@ const UserEditScreen = () => {
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        console.log(isAdmin);
         const updatedUser = {
                 _id: userId,
                 name,
@@ -26,7 +25,6 @@ const UserEditScreen = () => {
                 isAdmin,
             };
         const result = await updateUser(updatedUser).unwrap();
-        console.log("result " + result);
         if(result.error){
             console.log(result.error);
             toast.error(result.error)

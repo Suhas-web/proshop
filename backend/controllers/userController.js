@@ -80,12 +80,10 @@ const getUserProfile = errorHandler(async (req, res) => {
 // endpoint: PUT /api/users/profile
 // Access: private
 const updateUserProfile = errorHandler(async (req, res) => {
-  console.log(req.params.id);
-  const user = await User.findById(req.params.id);
+  const user = await User.findById(req.body._id);
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
-    user.isAdmin = req.body.isAdmin;
     if (req.body.password) {
       user.password = req.body.password;
     }
@@ -132,7 +130,7 @@ const getUserById = errorHandler(async (req, res) => {
 // endpoint: PUT /api/users/:id
 // Access: private/admin
 const updateUser = errorHandler(async (req, res) => {
-  const user = User.findById({ _id: req.params.id });
+  const user = await User.findById({ _id: req.body._id });
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
@@ -140,10 +138,10 @@ const updateUser = errorHandler(async (req, res) => {
     try {
       const updatedUser = await user.save();
       res.status(200).json({
-        _id: updateUser._id,
-        name: updateUser.name,
-        email: updateUser.email,
-        isAdmin: updateUser.isAdmin,
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        isAdmin: updatedUser.isAdmin,
       });
     } catch (err) {
       res.status(500);
